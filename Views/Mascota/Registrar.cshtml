@@ -1,0 +1,66 @@
+﻿@model PetCare.Models.Mascota
+@{
+    ViewData["Title"] = "Registrar Mascota";
+}
+
+<h1 class="h3 mb-3">@ViewData["Title"]</h1>
+
+<form asp-action="Guardar" method="post" class="row g-3">
+    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+    <div class="col-md-6">
+        <label asp-for="Nombre" class="form-label"></label>
+        <input asp-for="Nombre" class="form-control" />
+        <span asp-validation-for="Nombre" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="Especie" class="form-label"></label>
+        <select asp-for="Especie" class="form-select" asp-items="Html.GetEnumSelectList<PetCare.Models.Especie>()">
+            <option value="">-- Seleccione --</option>
+        </select>
+        <span asp-validation-for="Especie" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="Raza" class="form-label"></label>
+        <input asp-for="Raza" class="form-control" />
+        <span asp-validation-for="Raza" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="Edad" class="form-label"></label>
+        <input asp-for="Edad" class="form-control" type="number" min="0" max="25" />
+        <span asp-validation-for="Edad" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="DuenoNombre" class="form-label"></label>
+        <input asp-for="DuenoNombre" class="form-control" />
+        <span asp-validation-for="DuenoNombre" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="Telefono" class="form-label"></label>
+        <input asp-for="Telefono" class="form-control" placeholder="########" />
+        <span asp-validation-for="Telefono" class="text-danger"></span>
+    </div>
+
+    <div class="col-md-6">
+        <label asp-for="FechaIngreso" class="form-label"></label>
+        <input asp-for="FechaIngreso" class="form-control" type="date"
+               value="@DateTime.Today.ToString("yyyy-MM-dd")"
+               min="@DateTime.Today.ToString("yyyy-MM-dd")"
+               max="@DateTime.Today.ToString("yyyy-MM-dd")" />
+        <span asp-validation-for="FechaIngreso" class="text-danger"></span>
+    </div>
+
+    <div class="col-12 d-flex gap-2">
+        <button type="submit" class="btn btn-success">Guardar</button>
+        <a asp-action="Index" class="btn btn-outline-secondary">Volver</a>
+    </div>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,65 @@
+﻿@model IReadOnlyList<PetCare.Models.Mascota>
+@{
+    ViewData["Title"] = "Listado de Mascotas";
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h3">@ViewData["Title"]</h1>
+    <a class="btn btn-primary" asp-action="Registrar">Registrar nueva</a>
+</div>
+
+@if (TempData["Ok"] is string ok && !string.IsNullOrWhiteSpace(ok))
+{
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        @ok
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+@if (Model == null || !Model.Any())
+{
+    <div class="alert alert-info">
+        No hay mascotas registradas aún.
+    </div>
+}
+else
+{
+    <div class="table-responsive">
+        <table class="table table-striped table-hover align-middle">
+            <thead class="table-dark">
+                <tr>
+                    <th>Nombre</th>
+                    <th>Especie</th>
+                    <th>Raza</th>
+                    <th>Edad</th>
+                    <th>Dueño</th>
+                    <th>Teléfono</th>
+                    <th>Fecha de ingreso</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var m in Model)
+                {
+                    <tr>
+                        <td>@m.Nombre</td>
+                        <td>@m.Especie</td>
+                        <td>@(string.IsNullOrWhiteSpace(m.Raza) ? "-" : m.Raza)</td>
+                        <td>@m.Edad</td>
+                        <td>@m.DuenoNombre</td>
+                        <td>@m.Telefono</td>
+                        <td>
+                            @if (m.FechaIngreso.HasValue)
+                            {
+                                @m.FechaIngreso.Value.ToString("dd/MM/yyyy")
+                            }
+                            else
+                            {
+                                @("-")
+                            }
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
